@@ -30,7 +30,6 @@ function HomePage({token , setToken}) {
         function SSE() {
 
             const eventSource = new EventSource(`/api/events?token=${token}`);
-            console.log('test');
 
             eventSource.onmessage = (event) => {
                 setTestData(event.data);
@@ -40,6 +39,8 @@ function HomePage({token , setToken}) {
                 console.log(err.message);
                 return eventSource.close()
             }
+
+            console.log('test')
 
             return () => {
                 return eventSource.close()
