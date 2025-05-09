@@ -33,10 +33,10 @@ function LoginPage({onLogin , setToken}) {
                 backgroundImage: `url(${Background})`,
             }}
         >
-            <div className="flex w-screen items-center bg-white h-[50px] justify-between">
+            <div className="flex w-screen items-center justify-between bg-white h-[50px]">
                 <p className="text-2xl font-bold ml-[5%]">健康檢測系統 Health monitor System</p>
                 <button
-                    className="mr-[5%] rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 py-2 text-sm font-medium text-white w-[100px] hover:bg-gradient-to-bl focus:outline-none focus:ring-4 focus:ring-blue-300"
+                    className="rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 py-2 text-sm font-medium text-white mr-[5%] w-[100px] hover:bg-gradient-to-bl focus:outline-none focus:ring-4 focus:ring-blue-300"
                     onClick={() => {
                         setStart(false)
                     }}

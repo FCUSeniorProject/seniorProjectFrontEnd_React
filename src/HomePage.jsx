@@ -45,6 +45,8 @@ function HomePage({token , setToken}) {
                 return eventSource.close()
             }
         }
+
+        SSE();
     }, []);
     //----------
 
@@ -81,7 +83,11 @@ function HomePage({token , setToken}) {
                             <p className="text-center text-4xl text-yellow-600">8500 步</p>
                             <p className="mr-5 mb-5 text-end text-gray-400">達成率:85%</p>
                         </div>
-                        <div className="m-5 rounded-3xl border-white h-[175px] w-[225px] border-1"></div>
+                        <div className="m-5 flex items-center justify-center rounded-3xl border-white h-[175px] w-[225px] border-1">
+                            <p className="text-3xl font-bold text-white">
+                                {TestData}
+                            </p>
+                        </div>
                         <div className="m-5 rounded-3xl border-white h-[175px] w-[225px] border-1"></div>
                         <div className="m-5 rounded-3xl border-white h-[175px] w-[225px] border-1"></div>
                         <div className="m-5 rounded-3xl border-white h-[175px] w-[225px] border-1"></div>
