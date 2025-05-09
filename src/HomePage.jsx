@@ -29,7 +29,7 @@ function HomePage({token , setToken}) {
 
         function SSE() {
 
-            const eventSource = new EventSource(`/api/events?token=${token}`);
+            const eventSource = new EventSource(`https://app-ctoszxbbsa-uc.a.run.app/api/events?token=${token}`);
 
             eventSource.onmessage = (event) => {
                 setTestData(event.data);
