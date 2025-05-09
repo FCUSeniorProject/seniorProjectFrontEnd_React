@@ -29,7 +29,7 @@ function HomePage({token , setToken}) {
 
         function SSE() {
 
-            const eventSource = new EventSource(`https://app-ctoszxbbsa-uc.a.run.app/api/events?token=${token}`);
+            let eventSource = new EventSource(`https://app-ctoszxbbsa-uc.a.run.app/api/events?token=${token}`);
 
             eventSource.onmessage = (event) => {
                 setTestData(event.data);
@@ -37,6 +37,7 @@ function HomePage({token , setToken}) {
 
             eventSource.onerror = (err) => {
                 console.log(err.message);
+                SSE();
                 return eventSource.close()
             }
 
