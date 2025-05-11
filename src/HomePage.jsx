@@ -97,9 +97,9 @@ function HomePage({token , setToken}) {
             <div className="flex flex-grow overflow-hidden">
 
                 {/* Sidebar */}
-                <div className="flex flex-col h-full w-[20%] bg-gray-950 min-w-[200px]">
+                <div className="flex h-full flex-col w-[20%] bg-gray-950 min-w-[200px]">
                     <div className="mb-5 flex items-center justify-between rounded-2xl border-b-2 border-gray-700 p-3">
-                        <div className="bg-white rounded-full w-[40px] h-[40px]"></div>
+                        <div className="rounded-full bg-white w-[40px] h-[40px]"></div>
                         <CiLogout color="#FFFFFF" size="25"/>
                         <p
                             className="mr-7 cursor-pointer font-bold text-white text-1xl"
@@ -123,23 +123,23 @@ function HomePage({token , setToken}) {
                 </div>
 
                 {/* Main Display Area */}
-                <div className="flex flex-col items-center w-full h-full p-5">
+                <div className="flex h-full w-full flex-col items-center p-5">
                     {page === 0 && <HomePage_Page0></HomePage_Page0>}
-                    {page === 1 && <p className="w-full text-center text-white font-bold text-4xl p-5">近期趨勢</p>}
-                    {page === 2 && <p className="w-full text-center text-white font-bold text-4xl p-5">通知與提醒</p>}
-                    {page === 3 && <p className="w-full text-center text-white font-bold text-4xl p-5">心率</p>}
-                    {page === 4 && <p className="w-full text-center text-white font-bold text-4xl p-5">呼吸速率</p>}
-                    {page === 5 && <p className="w-full text-center text-white font-bold text-4xl p-5">體溫</p>}
-                    {page === 6 && <p className="w-full text-center text-white font-bold text-4xl p-5">血氧/血壓</p>}
-                    {page === 7 && <p className="w-full text-center text-white font-bold text-4xl p-5">活動量</p>}
-                    {page === 8 && <p className="w-full text-center text-white font-bold text-4xl p-5">每日/每周 活動趨勢</p>}
-                    {page === 9 && <p className="w-full text-center text-white font-bold text-4xl p-5">工作與休息比例</p>}
-                    {page === 10 && <p className="w-full text-center text-white font-bold text-4xl p-5">睡眠時長/深淺眠比</p>}
-                    {page === 11 && <p className="w-full text-center text-white font-bold text-4xl p-5">入睡與起床時間</p>}
-                    {page === 12 && <p className="w-full text-center text-white font-bold text-4xl p-5">睡眠趨勢圖表</p>}
-                    {page === 13 && <p className="w-full text-center text-white font-bold text-4xl p-5">主題與介面</p>}
-                    {page === 14 && <p className="w-full text-center text-white font-bold text-4xl p-5">隱私權限設定</p>}
-                    {page === 15 && <p className="w-full text-center text-white font-bold text-4xl p-5">監控管理</p>}
+                    {page === 1 && <p className="w-full p-5 text-center text-4xl font-bold text-white">近期趨勢</p>}
+                    {page === 2 && <p className="w-full p-5 text-center text-4xl font-bold text-white">通知與提醒</p>}
+                    {page === 3 && <p className="w-full p-5 text-center text-4xl font-bold text-white">心率</p>}
+                    {page === 4 && <p className="w-full p-5 text-center text-4xl font-bold text-white">呼吸速率</p>}
+                    {page === 5 && <p className="w-full p-5 text-center text-4xl font-bold text-white">體溫</p>}
+                    {page === 6 && <p className="w-full p-5 text-center text-4xl font-bold text-white">血氧/血壓</p>}
+                    {page === 7 && <p className="w-full p-5 text-center text-4xl font-bold text-white">活動量</p>}
+                    {page === 8 && <p className="w-full p-5 text-center text-4xl font-bold text-white">每日/每周 活動趨勢</p>}
+                    {page === 9 && <p className="w-full p-5 text-center text-4xl font-bold text-white">工作與休息比例</p>}
+                    {page === 10 && <p className="w-full p-5 text-center text-4xl font-bold text-white">睡眠時長/深淺眠比</p>}
+                    {page === 11 && <p className="w-full p-5 text-center text-4xl font-bold text-white">入睡與起床時間</p>}
+                    {page === 12 && <p className="w-full p-5 text-center text-4xl font-bold text-white">睡眠趨勢圖表</p>}
+                    {page === 13 && <p className="w-full p-5 text-center text-4xl font-bold text-white">主題與介面</p>}
+                    {page === 14 && <p className="w-full p-5 text-center text-4xl font-bold text-white">隱私權限設定</p>}
+                    {page === 15 && <p className="w-full p-5 text-center text-4xl font-bold text-white">監控管理</p>}
                 </div>
             </div>
         </div>
