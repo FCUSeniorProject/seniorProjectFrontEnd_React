@@ -5,10 +5,11 @@ import SidebarItem from "./components/SidebarItem.jsx";
 import HomePage_Page0 from "./components/HomePage_Page0.jsx";
 
 function HomePage({token , setToken}) {
-    const [HR, setHR] = useState(87.0);
-    const [TestData , setTestData] = useState("init");
-    const [select , setSelect] = useState(["總攬" , 0]);
-    const [page , setPage] = useState(0);
+
+    const [select , setSelect] = useState(["總攬" , 0]); //設定當前Sidebar選項，供選項反白用
+    const [page , setPage] = useState(0); //設定顯示何種畫面
+    const [devicesInfo , setDevicesInfo] = useState({});
+
     const Sidebar = {
         "總攬": {
             "今日摘要":() => {setPage(0)},
@@ -40,46 +41,36 @@ function HomePage({token , setToken}) {
 
     //-----別動-----
     useEffect(() => {
-        async function updateHR() {
-            let headers = {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": `Bearer ${token}`
-            };
-
-            let head = await fetch("/api/get", {
-                method: "POST",
-                headers: headers,
-                body: JSON.stringify({
-                    id: "123456"
-                })
-            })
-
-            let body = await head.json();
-            setHR(body.HR);
-        }
-
         function SSE() {
-
+            //https://app-ctoszxbbsa-uc.a.run.app
             let eventSource = new EventSource(`https://app-ctoszxbbsa-uc.a.run.app/api/events?token=${token}`);
 
             eventSource.onmessage = (event) => {
-                setTestData(event.data);
+
+                console.log('Get Data');
+                console.log(event.data);
+                let data = JSON.parse(event.data);
+
+                setDevicesInfo((prevDevicesInfo) => ({
+                    ...prevDevicesInfo,
+                    [data.device]: data.HR
+                }));
             }
 
             eventSource.onerror = (err) => {
-                console.log(err.message);
-                SSE();
-                return eventSource.close()
+                console.log('Connection lost, attempting to reconnect...');
+                eventSource.close(); // 關閉舊的連接
+                setTimeout(() => {
+                    SSE();
+                }, 1000);
             }
-
-            console.log('test')
 
             return () => {
                 return eventSource.close()
             }
         }
 
+        SSE();
     }, []);
     //----------
 
@@ -124,7 +115,7 @@ function HomePage({token , setToken}) {
 
                 {/* Main Display Area */}
                 <div className="flex h-full w-full flex-col items-center p-5">
-                    {page === 0 && <HomePage_Page0></HomePage_Page0>}
+                    {page === 0 && <HomePage_Page0 deviceInfo={devicesInfo}></HomePage_Page0>}
                     {page === 1 && <p className="w-full p-5 text-center text-4xl font-bold text-white">近期趨勢</p>}
                     {page === 2 && <p className="w-full p-5 text-center text-4xl font-bold text-white">通知與提醒</p>}
                     {page === 3 && <p className="w-full p-5 text-center text-4xl font-bold text-white">心率</p>}
