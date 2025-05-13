@@ -6,12 +6,12 @@ import HomePage_Page0 from "./components/HomePage_Page0.jsx";
 
 function HomePage({token , setToken}) {
 
-    const [select , setSelect] = useState(["總攬" , 0]); //設定當前Sidebar選項，供選項反白用
+    const [select , setSelect] = useState(["總覽" , 0]); //設定當前Sidebar選項，供選項反白用
     const [page , setPage] = useState(0); //設定顯示何種畫面
     const [devicesInfo , setDevicesInfo] = useState({});
 
     const Sidebar = {
-        "總攬": {
+        "總覽": {
             "今日摘要":() => {setPage(0)},
             "近期趨勢":() => {setPage(1)},
             "通知與提醒":() => {setPage(2)}
@@ -89,23 +89,25 @@ function HomePage({token , setToken}) {
 
                 {/* Sidebar */}
                 <div className="flex h-full flex-col w-[20%] bg-gray-950 min-w-[200px]">
-                    <div className="mb-5 flex items-center justify-between rounded-2xl border-b-2 border-gray-700 p-3">
+                    <div className="mb-5 flex items-center gap-4 px-6 rounded-2xl border-b-2 border-gray-700 p-3">
                         <div className="rounded-full bg-white w-[40px] h-[40px]"></div>
-                        <CiLogout color="#FFFFFF" size="25"/>
-                        <p
-                            className="mr-7 cursor-pointer font-bold text-white text-1xl"
+
+                        <div
+                            className="flex items-center gap-2 cursor-pointer px-2 py-2 rounded transition-colors"
                             onClick={() => {
-                                sessionStorage.removeItem("token");
-                                setToken(null);
+                            sessionStorage.removeItem("token");
+                            setToken(null);
                             }}
                         >
-                            Log Out
-                        </p>
+                            <CiLogout color="#FFFFFF" size={25} />
+                            <p className="font-bold text-white text-base">Log Out</p>
+                        </div>
                     </div>
+
 
                     {/* 滾動選單 */}
                     <div className="flex-grow overflow-y-auto">
-                        <SidebarItem select={select} setSelect={setSelect} title="總攬" contents={Sidebar["總攬"]}/>
+                        <SidebarItem select={select} setSelect={setSelect} title="總覽" contents={Sidebar["總覽"]}/>
                         <SidebarItem select={select} setSelect={setSelect} title="生理數據" contents={Sidebar["生理數據"]}/>
                         <SidebarItem select={select} setSelect={setSelect} title="活動數據" contents={Sidebar["活動數據"]}/>
                         <SidebarItem select={select} setSelect={setSelect} title="睡眠數據" contents={Sidebar["睡眠數據"]}/>
