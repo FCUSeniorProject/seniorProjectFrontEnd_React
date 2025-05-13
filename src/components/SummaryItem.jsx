@@ -13,17 +13,23 @@ function SummaryItem({deviceName , HR}) {
                 </div>
                 <div className="border-white bg-green-500 rounded-[50%] h-[20px] w-[20px] border-1"></div>
             </div>
-            {isOpen && <div className="mt-5 flex w-full justify-center border-t-2 border-gray-500">
-                <div className="m-5 flex flex-col justify-between rounded-2xl bg-gray-700 p-3 h-[200px] w-[30%]">
+            <div
+                className={`
+                    transition-all duration-500 overflow-hidden w-full mt-2 border-t-2 border-gray-500
+                    ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
+                `}
+                >
+                <div className="mt-5 flex w-full justify-center">
+                    <div className="m-5 flex flex-col justify-between rounded-2xl bg-gray-700 p-3 h-[200px] w-[30%]">
                     <p className="w-full text-3xl text-white">及時心率:</p>
                     <p className="w-full text-center text-3xl text-white">{HR ? HR : "Waiting"}</p>
                     <p className="w-full text-end text-xl text-white">BMP</p>
+                    </div>
+                    <div className="m-5 rounded-2xl bg-gray-700 h-[200px] w-[30%]"></div>
+                    <div className="m-5 rounded-2xl bg-gray-700 h-[200px] w-[30%]"></div>
                 </div>
-                <div className="m-5 rounded-2xl bg-gray-700 h-[200px] w-[30%]">
-                </div>
-                <div className="m-5 rounded-2xl bg-gray-700 h-[200px] w-[30%]">
-                </div>
-            </div>}
+            </div>
+
         </div>
     )
 }

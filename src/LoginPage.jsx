@@ -65,7 +65,7 @@ function LoginPage({ onLogin, setToken }) {
                 </div>
 
                 <button
-                    className="mt-10 rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 py-2 text-sm font-medium text-white w-[120px] hover:bg-gradient-to-bl focus:outline-none focus:ring-4 focus:ring-blue-300 z-10"
+                    className="mt-10 rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 py-2 font-medium text-white w-[120px] hover:bg-gradient-to-bl focus:outline-none focus:ring-4 focus:ring-blue-300 z-10"
                     onClick={() => setStart(true)}
                 >
                     開始使用
