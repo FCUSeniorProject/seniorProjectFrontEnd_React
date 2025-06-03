@@ -3,15 +3,17 @@ import { CiLogout } from "react-icons/ci";
 import { SlArrowRight , SlArrowDown  } from "react-icons/sl";
 import SidebarItem from "./components/SidebarItem.jsx";
 import HomePage_Page0 from "./components/HomePage_Page0.jsx";
+import MapBoxTesting from "./components/MapBoxTesting.jsx";
+import GoogleMapTesting from "./components/GoogleMapTesting.jsx";
 
 function HomePage({token , setToken}) {
 
-    const [select , setSelect] = useState(["總覽" , 0]); //設定當前Sidebar選項，供選項反白用
+    const [select , setSelect] = useState(["總攬" , 0]); //設定當前Sidebar選項，供選項反白用
     const [page , setPage] = useState(0); //設定顯示何種畫面
     const [devicesInfo , setDevicesInfo] = useState({});
 
     const Sidebar = {
-        "總覽": {
+        "總攬": {
             "今日摘要":() => {setPage(0)},
             "近期趨勢":() => {setPage(1)},
             "通知與提醒":() => {setPage(2)}
@@ -36,6 +38,10 @@ function HomePage({token , setToken}) {
             "主題與介面":() => {setPage(13)},
             "隱私權限設定":() => {setPage(14)},
             "監控管理":() => {setPage(15)}
+        },
+        "測試": {
+            "Mapbox": () => {setPage(16)},
+            "Google": () => {setPage(17)}
         }
     }
 
@@ -43,7 +49,14 @@ function HomePage({token , setToken}) {
     useEffect(() => {
         function SSE() {
             //https://app-ctoszxbbsa-uc.a.run.app
-            let eventSource = new EventSource(`https://app-ctoszxbbsa-uc.a.run.app/api/events?token=${token}`);
+            let url = '/api/events'
+            console.log(url)
+            let eventSource = new EventSource(url , {
+                withCredentials: true,
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
 
             eventSource.onmessage = (event) => {
 
@@ -88,7 +101,7 @@ function HomePage({token , setToken}) {
             <div className="flex flex-grow overflow-hidden">
 
                 {/* Sidebar */}
-                <div className="flex h-full flex-col w-[20%] bg-gray-950 min-w-[200px]">
+                <div className="flex h-full flex-col w-[250px] bg-gray-950">
                     <div className="mb-5 flex items-center gap-4 px-6 rounded-2xl border-b-2 border-gray-700 p-3">
                         <div className="rounded-full bg-white w-[40px] h-[40px]"></div>
 
@@ -104,14 +117,13 @@ function HomePage({token , setToken}) {
                         </div>
                     </div>
 
-
                     {/* 滾動選單 */}
                     <div className="flex-grow overflow-y-auto">
-                        <SidebarItem select={select} setSelect={setSelect} title="總覽" contents={Sidebar["總覽"]}/>
-                        <SidebarItem select={select} setSelect={setSelect} title="生理數據" contents={Sidebar["生理數據"]}/>
-                        <SidebarItem select={select} setSelect={setSelect} title="活動數據" contents={Sidebar["活動數據"]}/>
-                        <SidebarItem select={select} setSelect={setSelect} title="睡眠數據" contents={Sidebar["睡眠數據"]}/>
-                        <SidebarItem select={select} setSelect={setSelect} title="設定" contents={Sidebar["設定"]}/>
+                        {Object.entries(Sidebar).map(([title , contents]) => {
+                            return (
+                                <SidebarItem select={select} setSelect={setSelect} title={title} contents={contents}/>
+                            )
+                        })}
                     </div>
                 </div>
 
@@ -133,6 +145,8 @@ function HomePage({token , setToken}) {
                     {page === 13 && <p className="w-full p-5 text-center text-4xl font-bold text-white">主題與介面</p>}
                     {page === 14 && <p className="w-full p-5 text-center text-4xl font-bold text-white">隱私權限設定</p>}
                     {page === 15 && <p className="w-full p-5 text-center text-4xl font-bold text-white">監控管理</p>}
+                    {page === 16 && <p className="w-full p-5 text-center text-4xl font-bold text-white">監控管理</p>}
+                    {page === 17 && <p className="w-full p-5 text-center text-4xl font-bold text-white">監控管理</p>}
                 </div>
             </div>
         </div>
