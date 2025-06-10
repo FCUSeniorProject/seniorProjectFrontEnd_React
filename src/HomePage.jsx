@@ -1,16 +1,21 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import { CiLogout } from "react-icons/ci";
 import { SlArrowRight , SlArrowDown  } from "react-icons/sl";
 import SidebarItem from "./components/SidebarItem.jsx";
 import HomePage_Page0 from "./components/HomePage_Page0.jsx";
 import MapBoxTesting from "./components/MapBoxTesting.jsx";
 import GoogleMapTesting from "./components/GoogleMapTesting.jsx";
+import { EventSourcePolyfill } from 'event-source-polyfill';
+
 
 function HomePage({token , setToken}) {
 
     const [select , setSelect] = useState(["總攬" , 0]); //設定當前Sidebar選項，供選項反白用
     const [page , setPage] = useState(0); //設定顯示何種畫面
     const [devicesInfo , setDevicesInfo] = useState({});
+    const eventSourceRef = useRef(null);
+    const reconnectTimerRef = useRef(null);
+
 
     const Sidebar = {
         "總攬": {
@@ -47,43 +52,50 @@ function HomePage({token , setToken}) {
 
     //-----別動-----
     useEffect(() => {
-        function SSE() {
+        function connectSSE() {
+            // 建立連線
             //https://app-ctoszxbbsa-uc.a.run.app
-            let url = '/api/events'
-            console.log(url)
-            let eventSource = new EventSource(url , {
-                withCredentials: true,
+            //http://127.0.0.1:5001/seniorproject-9a41a/us-central1/app
+            let eventSource = new EventSourcePolyfill('http://127.0.0.1:5001/seniorproject-9a41a/us-central1/app/api/events' , {
                 headers: {
-                    "Authorization": `Bearer ${token}`
+                    withCredentials:true,
+                    Authorization: `Bearer ${token}`
                 }
             });
+            eventSourceRef.current = eventSource;
 
             eventSource.onmessage = (event) => {
 
-                console.log('Get Data');
-                console.log(event.data);
-                let data = JSON.parse(event.data);
+                try {
+                    const data = JSON.parse(event.data);
+                    console.log('Received:', data);
+                    setDevicesInfo(prev => ({
+                        ...prev,
+                        [data.device]: data.HR
+                    }));
+                } catch (e) {
+                    console.error('Failed to parse SSE data:', e);
+                }
+            };
 
-                setDevicesInfo((prevDevicesInfo) => ({
-                    ...prevDevicesInfo,
-                    [data.device]: data.HR
-                }));
-            }
-
-            eventSource.onerror = (err) => {
-                console.log('Connection lost, attempting to reconnect...');
-                eventSource.close(); // 關閉舊的連接
-                setTimeout(() => {
-                    SSE();
-                }, 1000);
-            }
-
-            return () => {
-                return eventSource.close()
-            }
+            eventSource.onerror = () => {
+                console.warn('SSE disconnected. Will retry in 2 seconds...');
+                eventSource.close();
+                reconnectTimerRef.current = setTimeout(connectSSE, 1000); // 延遲 2 秒後重連
+            };
         }
 
-        SSE();
+        connectSSE(); // 初次建立連線
+
+        return () => {
+            // 清除所有連線與定時器
+            if (eventSourceRef.current) {
+                eventSourceRef.current.close();
+            }
+            if (reconnectTimerRef.current) {
+                clearTimeout(reconnectTimerRef.current);
+            }
+        };
     }, []);
     //----------
 

@@ -15,8 +15,7 @@
         "source": "**",
         "destination": "/index.html"
       }
-    ],
-    "postdeploy": ["npm run build"]
+    ]
   },
   "functions": [{
     "runtime": "nodejs22",
