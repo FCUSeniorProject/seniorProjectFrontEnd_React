@@ -56,7 +56,7 @@ function HomePage({token , setToken}) {
             // 建立連線
             //https://app-ctoszxbbsa-uc.a.run.app
             //http://127.0.0.1:5001/seniorproject-9a41a/us-central1/app
-            let eventSource = new EventSourcePolyfill('http://127.0.0.1:5001/seniorproject-9a41a/us-central1/app/api/events' , {
+            let eventSource = new EventSourcePolyfill('https://app-ctoszxbbsa-uc.a.run.app/api/events' , {
                 headers: {
                     withCredentials:true,
                     Authorization: `Bearer ${token}`
